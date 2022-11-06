@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery Validator</title>
+    <link rel="stylesheet" href="public/css/bootstrap.css">
+    <!-- <script src="public/js/bootstrap.js"></script> -->
+    <script src="public/js/jquery.js"></script>
+    <script src="public/js/validate.js"></script>
+
+    <noscript>Enable script to enable site to function correctly</noscript>
+</head>
+
+<body>
+    <form class="container my-5" id="form">
+        <fieldset>
+            <legend>Form</legend>
+            <div class="form-group mail">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    placeholder="Enter email" required>
+
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                    minlength="8" required>
+
+                <label id="exampleInputPassword1-error" class="error" for="exampleInputPassword1"></label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </fieldset>
+    </form>
+</body>
+<script>
+    $(document).ready(() => {
+        $('#form').validate();
+        $(document).on('submit', '#form', () => {
+            // console.log("e");
+            function check() {
+                try {
+                    const acceptedmails = ['google.com', 'hotmail.com', 'outlook.com']
+                    const mail = $('#exampleInputEmail1').val();
+                    const mailSplitted = mail.split('@');
+                    // console.log(mail);
+                    if (mailSplitted.length == 2) {
+                        if (!(acceptedmails.indexOf(mailSplitted[1].toLowerCase()) > -1)) {
+                            throw 'Invalid email address. Try a different one';
+                        }
+                    }
+                    else {
+                        throw 'Invalid email';
+                    }
+                    return true;
+                } catch (error) {
+                    $('.mail').append(`<label id="exampleInputEmail1-error" class="error" for="exampleInputEmail1">${error}</label>`)
+                    return false;
+                }
+            }
+            if (check()) {
+                window.location.href = '/pagination.html';
+            }
+            return false;
+        });
+    })
+    function checker() {
+        // e.preventDefault();
+        mailChecker();
+    }
+    function mailChecker() {
+
+    }
+</script>
+<style>
+    .error {
+        color: red;
+        font-weight: 600;
+    }
+</style>
+
+</html>
